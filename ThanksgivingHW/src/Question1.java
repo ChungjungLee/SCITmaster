@@ -14,10 +14,21 @@ public class Question1 {
 		System.out.print("몇 번째 항까지 출력할지 입력:  ");
 		int input = sc.nextInt();
 		
-		int term1 = 1;
-		for (int i = 0; i < input; i++) {
-			
+		if (input < 1) {
+			System.out.println("1보다 큰 수를 입력하세요.");
+			return;
 		}
+		
+		int term1 = 0;
+		int term2 = 1;
+		for (int i = 0; i < input; i++) {
+			System.out.print(term2 + " ");
+			int nextTerm = term1 + term2;
+			term1 = term2;
+			term2 = nextTerm;
+		}
+		
+		System.out.println();
 	}
 
 }
