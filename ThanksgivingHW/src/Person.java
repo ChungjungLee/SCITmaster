@@ -14,5 +14,51 @@ public class Person {
 	private String phone;
 	private String address;
 	
+	public Person() {
+		
+	}
+	
+	public Person(String memberNumber, String name, String phone, String address) {
+		this.memberNumber = memberNumber;
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+	}
+	
+	public String getMemberNumber() {
+		return memberNumber;
+	}
+	
+	public void setMemberNumber(String memberNumber) {
+		this.memberNumber = memberNumber;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+	
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public void print() {
+		System.out.printf("번호: %s\t이름: %s\t전화번호: %s\t주소: %s\n", memberNumber, name, phone, address);
+	}
 	
 }

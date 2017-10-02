@@ -21,7 +21,82 @@ import java.util.Scanner;
 public class Queston4 {
 
 	public static void main(String[] args) {
+		final int MAX_PERSON = 10;
+		
 		Scanner sc = new Scanner(System.in);
+		Person p[] = new Person[MAX_PERSON];
+		
+		/* 메인 메뉴 */
+		boolean isContinue = true;
+		int currentPeople = 0;
+		while (isContinue) {
+			System.out.println();
+			System.out.println("[ 회원 주소록 ]");
+			System.out.println("1. 회원 정보 등록");
+			System.out.println("2. 전체 회원 보기");
+			System.out.println("3. 회원 정보 검색");
+			System.out.println("0. 프로그램 종료");
+			System.out.print("메뉴 번호 선택> ");
+			int input = Integer.parseInt(sc.nextLine());
+			
+			switch (input) {
+				case 1:
+					/* 회원 정보를 10명까지 등록 */
+					if (currentPeople >= 10) {
+						System.out.println("10명을 등록하여 더 이상 등록할 수 없습니다.");
+						break;
+					}
+					
+					System.out.print("회원번호: ");
+					String memberNumber = sc.nextLine();
+					System.out.print("이름: ");
+					String name = sc.nextLine();
+					System.out.print("전화번호: ");
+					String phone = sc.nextLine();
+					System.out.print("주소: ");
+					String address = sc.nextLine();
+					
+					p[currentPeople] = new Person(memberNumber, name, phone, address);
+					currentPeople++;
+					
+					break;
+					
+				case 2:
+					/* 회원 정보 보기 */
+					for (int i = 0; i < currentPeople; i++) {
+						p[i].print();
+					}
+					
+					break;
+					
+				case 3:
+					/* 회원 정보 검색*/
+					System.out.println("[ 회원 검색 ]");
+					System.out.print("검색할 회원 이름: ");
+					String findingName = sc.nextLine();
+					
+					for (int i = 0; i < currentPeople; i++) {
+						if (p[i].getName().equals(findingName)) {
+							p[i].print();
+							break;
+						}
+					}
+					
+					break;
+					
+				case 0:
+					/* 프로그램 종료 */
+					System.out.println("프로그램을 종료합니다.");
+					isContinue = false;
+					break;
+					
+				default:
+					/* 잘못된 입력 */
+					System.out.println("메뉴에 없는 번호를 입력하였습니다.");
+					break;
+			}
+			
+		} // end of while
 		
 
 	}
