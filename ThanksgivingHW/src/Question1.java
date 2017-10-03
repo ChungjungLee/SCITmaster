@@ -11,7 +11,7 @@ public class Question1 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.print("몇 번째 항까지 출력할지 입력:  ");
+		System.out.print("몇 번째 항까지 출력할 것인지 입력:  ");
 		int input = sc.nextInt();
 		
 		if (input < 1) {

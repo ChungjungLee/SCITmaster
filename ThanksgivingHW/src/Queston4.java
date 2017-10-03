@@ -42,11 +42,13 @@ public class Queston4 {
 			switch (input) {
 				case 1:
 					/* 회원 정보를 10명까지 등록 */
-					if (currentPeople >= 10) {
-						System.out.println("10명을 등록하여 더 이상 등록할 수 없습니다.");
+					if (currentPeople >= MAX_PERSON) {
+						System.out.println(MAX_PERSON + "명을 등록하여 더 이상 등록할 수 없습니다.");
 						break;
 					}
 					
+					System.out.println();
+					System.out.println("[ 회원 등록 ]");
 					System.out.print("회원번호: ");
 					String memberNumber = sc.nextLine();
 					System.out.print("이름: ");
@@ -63,6 +65,8 @@ public class Queston4 {
 					
 				case 2:
 					/* 회원 정보 보기 */
+					System.out.println();
+					System.out.println("[ 전체 회원 목록 ]");
 					for (int i = 0; i < currentPeople; i++) {
 						p[i].print();
 					}
@@ -71,21 +75,31 @@ public class Queston4 {
 					
 				case 3:
 					/* 회원 정보 검색*/
+					System.out.println();
 					System.out.println("[ 회원 검색 ]");
 					System.out.print("검색할 회원 이름: ");
 					String findingName = sc.nextLine();
 					
-					for (int i = 0; i < currentPeople; i++) {
-						if (p[i].getName().equals(findingName)) {
-							p[i].print();
+					int indexFound;
+					boolean isFound = false;
+					for (indexFound = 0; indexFound < currentPeople; indexFound++) {
+						if (p[indexFound].getName().equals(findingName)) {
+							isFound = true;
 							break;
 						}
+					}
+					
+					if (isFound) {
+						p[indexFound].print();
+					} else {
+						System.out.println("회원 검색 결과가 없습니다.");
 					}
 					
 					break;
 					
 				case 0:
 					/* 프로그램 종료 */
+					System.out.println();
 					System.out.println("프로그램을 종료합니다.");
 					isContinue = false;
 					break;
