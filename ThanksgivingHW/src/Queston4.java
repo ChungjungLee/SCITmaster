@@ -112,7 +112,7 @@ public class Queston4 {
 			
 		} // end of while
 		
-
+		sc.close();
 	}
 
 }

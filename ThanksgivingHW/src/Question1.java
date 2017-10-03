@@ -16,6 +16,7 @@ public class Question1 {
 		
 		if (input < 1) {
 			System.out.println("1보다 큰 수를 입력하세요.");
+			sc.close();
 			return;
 		}
 		
@@ -29,6 +30,7 @@ public class Question1 {
 		}
 		
 		System.out.println();
+		sc.close();
 	}
 
 }
