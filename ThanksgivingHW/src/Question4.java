@@ -18,7 +18,7 @@
  * */
 import java.util.Scanner;
 
-public class Queston4 {
+public class Question4 {
 
 	public static void main(String[] args) {
 		final int MAX_PERSON = 10;
@@ -67,8 +67,13 @@ public class Queston4 {
 					/* 회원 정보 보기 */
 					System.out.println();
 					System.out.println("[ 전체 회원 목록 ]");
-					for (int i = 0; i < currentPeople; i++) {
-						p[i].print();
+					
+					if (currentPeople == 0) {
+						System.out.println("등록된 회원이 없습니다.");
+					} else {
+						for (int i = 0; i < currentPeople; i++) {
+							p[i].print();
+						}
 					}
 					
 					break;
