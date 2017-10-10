@@ -93,6 +93,20 @@ public class Question2 {
 		}
 		
 		System.out.println();
+		
+		int t1 = total_days % 7;
+		int date = -1 * (t1);
+		
+		for (int row = 0; row < 6; row++) {
+			for (int col = 0; col < 7; col++) {
+				if(1 <= date && date <= 31) {
+					System.out.print(date);
+				}
+				System.out.print("\t");
+				date++;
+			}
+			System.out.println();
+		}
 		sc.close();
 	}
 
