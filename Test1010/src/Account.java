@@ -11,6 +11,8 @@ public class Account {
 	}
 	
 	public Account(int accountNumber, String name, int balance) {
+		// 자기 자신의 생성자를 부를수 있다.
+		//this(accountNumber, name);
 		this.accountNumber = accountNumber;
 		this.name = name;
 		this.balance = balance;
