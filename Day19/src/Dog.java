@@ -36,6 +36,8 @@ public class Dog extends Animal {
 	 * 오버라이딩: 부모로부터 상속받은 함수를 재정의할 수 있다
 	 */
 	// annotation은 쓰나 안 쓰나 괜찮음
+	// 그러나 사용하는 이유는 annotation을 썼을 때
+	// 잘못된 함수를 override할 경우 error를 표시해주기 때문이다.
 	@Override
 	public void cry() {
 		System.out.println("bowwow");

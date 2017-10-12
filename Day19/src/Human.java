@@ -3,6 +3,11 @@ public class Human {
 	private String name;
 	private int age;
 	
+	public Human() {
+		System.out.println("default super class constructor called");
+	}
+	
+	
 	public Human(String name, int age) {
 		System.out.println("Human constructor called");
 		this.name = name;

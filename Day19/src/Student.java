@@ -3,7 +3,9 @@ public class Student extends Human {
 	private String major;
 	
 	public Student(String name, int age, String major) {
-		super(name, age);
+		//super(name, age);
+		setName(name);
+		setAge(age);
 		System.out.println("Student constructor called");
 		this.major = major;
 	}
