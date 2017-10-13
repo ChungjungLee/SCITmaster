@@ -3,7 +3,11 @@ public class SmartPhone extends Phone {
 	private String osType;
 	private String osVersion;
 	private int memory;
-	private boolean hasCamera;
+	private boolean camera;
+	//private boolean hasCamera;
+	// name convention
+	// boolean type들은 보통 is, has 등을 붙인다
+	// 그런데 field에 붙이는게 아니고 getter에 붙여 사용한다고 함.
 	
 	public SmartPhone() {
 		
@@ -11,12 +15,12 @@ public class SmartPhone extends Phone {
 	
 	public SmartPhone(String company, int price, String type
 					, String osType, String osVersion, int memory
-					, boolean hasCamera) {
+					, boolean camera) {
 		super(company, price, type);
 		this.osType = osType;
 		this.osVersion = osVersion;
 		this.memory = memory;
-		this.hasCamera = hasCamera;
+		this.camera = camera;
 	}
 	
 	@Override
@@ -24,7 +28,7 @@ public class SmartPhone extends Phone {
 		return super.toString() + " OS타입: " + osType
 				+ " OS버전: " + osVersion
 				+ " 메모리: " + memory
-				+ " 카메라 여부: " + hasCamera;
+				+ " 카메라 여부: " + camera;
 	}
 
 	public String getOsType() {
@@ -51,12 +55,13 @@ public class SmartPhone extends Phone {
 		this.memory = memory;
 	}
 
-	public boolean isHasCamera() {
-		return hasCamera;
+	// public boolean hasCamera()
+	public boolean hasCamera() {
+		return camera;
 	}
 
-	public void setHasCamera(boolean hasCamera) {
-		this.hasCamera = hasCamera;
+	public void setCamera(boolean camera) {
+		this.camera = camera;
 	}
 	
 	
