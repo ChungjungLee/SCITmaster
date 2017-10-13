@@ -3,10 +3,11 @@ public class Graduate extends Student {
 	// 조교 유형, 장학금 비율
 	private String ta;
 	private double scholarship;
+	private int assistType;
 	
 	public Graduate(String name, int id, String major) {
 		super(name, id, major);
-		this.ta = "미정";
+		this.assistType = TEACHING_ASSIST;
 		this.scholarship = 0.0;
 	}
 	
@@ -24,14 +25,9 @@ public class Graduate extends Student {
 	
 	public Graduate(String name, int id, 
 					String major, int year, 
-					int credit, String ta, double scholarship) {
+					int credit, int assistType, double scholarship) {
 		super(name, id, major, year, credit);
-		// TODO: parameter condition check
-		if (ta.equals("교육 조교") || ta.equals("연구 조교")) {
-			this.ta = ta;
-		} else {
-			this.ta = "미정";
-		}
+		this.assistType = assistType;
 		
 		/*
 		 * 생성자에서 조건을 비교하여 아예 객체를 만들지 못하게는 하지 못한다.
@@ -49,11 +45,11 @@ public class Graduate extends Student {
 				+ "장학금 비율: " + scholarship;
 	}
 	
-	public String getTa() {
-		return ta;
+	public int getAssistType() {
+		return assistType;
 	}
-	public void setTa(String ta) {
-		this.ta = ta;
+	public void setTa(int assistType) {
+		this.assistType = assistType;
 	}
 	
 	public double getScholarship() {
