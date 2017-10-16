@@ -20,6 +20,9 @@ public class Person {
 		System.out.println("address: " + address);
 	}
 
+	/**
+	 * 이름과 나이가 같으면 true를 반환
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		/*
@@ -35,6 +38,15 @@ public class Person {
 		if ((obj instanceof Person) == false) {
 			return false;
 		}
+		
+		// 이 클래스를 상속하는 객체들의 equals() 함수는 
+		// 각 객체에서 다시 override하여 이 equals()를 호출하는게
+		// 보통의 코딩방법이다.
+		/*
+		if ((obj instanceof Student) == true) {
+			System.out.println("student 객체다");
+		}
+		*/
 		
 		Person cmp = (Person) obj;
 		

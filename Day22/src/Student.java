@@ -21,5 +21,22 @@ public class Student extends Person{
 		this.major = major;
 	}
 
-	
+	@Override
+	public boolean equals(Object obj) {
+		if (super.equals(obj) == false) {
+			return false;
+		}
+		
+		if ((obj instanceof Student) == false) {
+			return false;
+		}
+		
+		Student cmp = (Student) obj;
+		
+		if (this.major.equals(cmp.major) == false) {
+			return false;
+		}
+		
+		return true;
+	}
 }
