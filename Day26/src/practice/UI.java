@@ -30,7 +30,7 @@ public class UI {
 				option = sc.nextInt();
 			} catch (Exception e) {
 				System.out.println("문자를 입력하지 마세요");
-				// 메뉴로 다시 돌아감
+				sc.nextLine();	// 버퍼에 처리하지 못한 입력이 남아있기 때문 
 				continue;
 			}
 			
@@ -44,9 +44,11 @@ public class UI {
 					break;
 					
 				case 3:	// 삭제
+					delete();
 					break;
 					
 				case 4:	// 전체 출력
+					printAll();
 					break;
 			}
 			
@@ -101,6 +103,43 @@ public class UI {
 			System.out.println(select);
 		}
 		
+	}
+	
+	/**
+	 * 삭제
+	 */
+	private void delete() {
+		System.out.print("삭제할 주민번호: ");
+		String ssn = sc.next();
+		
+		boolean canDelete = manager.delete(ssn);
+		
+		if (canDelete) {
+			System.out.println("삭제되었습니다.");
+		} else {
+			System.out.println("삭제에 실패했습니다.");
+		}
+	}
+	
+	/**
+	 * 전체 출력
+	 */
+	private void printAll() {
+		// 출력하는 메소드인데 여기서 출력을 해줘야 하는지?
+		
+		/* Manager class에서는 한 줄도 출력하지 않는 방법 */
+		int listSize = manager.getListSize();
+		
+		if (listSize == 0) {
+			System.out.println("등록된 사람이 없습니다.");
+		} else {
+			for (int index = 0; index < manager.getListSize(); index++) {
+				System.out.println((index + 1) + ") " + manager.getHuman(index));
+			}
+		}
+		
+		/* Manager class에서 처음부터 끝까지 출력하는 방법 */
+		manager.printAll();
 	}
 	
 }
