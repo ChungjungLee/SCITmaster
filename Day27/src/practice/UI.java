@@ -72,6 +72,15 @@ public class UI {
 	 */
 	private void insert() {
 		// 굳이 외부에서는 이 메소드를 접근할 이유가 없어서 private으로 선언
+
+		System.out.println("-- 무엇을 저장? --");
+		System.out.println("1. 학생");
+		System.out.println("2. 교수");
+		System.out.println("3. 직원");
+		System.out.print(">> 입력:");
+		// 어떤 타입을 저장하려는지에 따라 생성해야 하는 객체가 다르기 때문
+		int option = sc.nextInt();
+		
 		
 		System.out.print("이름: ");
 		String name = sc.next();
@@ -80,8 +89,37 @@ public class UI {
 		System.out.print("주민번호: ");
 		String ssn = sc.next();
 		
-		// 입력을 다 받았다면 Human 객체를 만들어서 Manager에게 처리토록 넘겨준다
-		Human h = new Human(name, age, ssn);
+		// 여러 타입의 객체를 한 번에 처리하기 위한 부모 클래스 객체
+		Human h = null;
+		switch (option) {
+			case 1:	// 학생
+				System.out.print("학번: ");
+				String studentNum = sc.next();
+				
+				h = new Student(name, age, ssn, studentNum);
+				
+				break;
+				
+			case 2:	// 교수
+				System.out.print("전공: ");
+				String major = sc.next();
+				
+				h = new Professor(name, age, ssn, major);
+				
+				break;
+				
+			case 3:	// 직원
+				System.out.print("부서: ");
+				String department = sc.next();
+				
+				h = new Staff(name, age, ssn, department);
+				
+				break;
+				
+			default:
+				System.out.println("잘못 입력하셨습니다.");
+				return;
+		}
 		
 		// TODO: 매니저에게 넘겨주어야 함
 		// 이런 식으로 매번 manager 객체를 생성하면 저장되는 list가 매번 사라짐
@@ -109,6 +147,8 @@ public class UI {
 		if (select == null) {
 			System.out.println("아무것도 못 찾았다.");
 		} else {
+			// Human을 상속 받아서 toString()을 override시켰으니
+			// override된 toString()을 사용해서 출력된다!!!!!!
 			System.out.println(select);
 		}
 		
@@ -162,7 +202,7 @@ public class UI {
 		}
 		
 		/* Manager class에서 처음부터 끝까지 출력하는 방법 */
-		manager.printAll();
+		//manager.printAll();
 	}
 	
 }
