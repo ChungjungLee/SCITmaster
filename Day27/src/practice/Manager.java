@@ -2,8 +2,12 @@ package practice;
 
 import java.util.ArrayList;
 
+/*
+ * 서버와 비슷
+ */
 public class Manager {
 	private ArrayList<Human> list;
+	// 우리가 만든 4가지 타입의 클래스 모두가 Human으로 변환이 가능
 	// 왜 필드에서 변수를 초기화하지 않는가?
 	// 일반적으로는 생성자를 통해서 초기화하기 때문
 	
@@ -12,6 +16,13 @@ public class Manager {
 	 */
 	public Manager() {
 		list = new ArrayList<>();
+	}
+	
+	/*
+	 * Getter
+	 */
+	public ArrayList<Human> getList() {
+		return this.list;
 	}
 	
 	// UI측에서 어떠한 기능을 수행해 달라고 요청하는 클래스이기 때문에
@@ -28,12 +39,30 @@ public class Manager {
 		// array는 등록여부를 직접 확인해야 함
 		
 		// TODO: 주민번호가 동일한 사람이 있다면 등록 불가
+		/*
 		if (select(h.getSsn()) == null) {
 			// 동일한 사람이 없으므로 그냥 넣어주면 된다
 			return list.add(h);
 		} else {
 			return false;
 		}
+		*/
+		// 단순히 if문에 우리가 하고 싶은 문장을 쓰는 것보다는 
+		// 배제시키고 싶은 조건들을 먼저 비교해서 return 시키는 것이 가독성 좋음
+		if (select(h.getSsn()) != null) {
+			return false;
+		}
+		
+		return list.add(h);
+		/*
+		for (int i = 0; i < list.size(); i++) {
+			Human temp = list.get(i);
+			
+			if (temp.getSsn().equals(h.getSsn())) {
+				return false;
+			}
+		}
+		*/
 		
 	}
 	
@@ -63,6 +92,8 @@ public class Manager {
 	public boolean delete(String ssn) {
 		// 지우려는 사람이 있는지 판별
 		// select()의 반환값이 찾은 Human이거나 null
+		
+		/*
 		Human temp = select(ssn);
 		
 		if (temp == null) {
@@ -70,6 +101,20 @@ public class Manager {
 		} else {
 			return list.remove(temp);
 		}
+		*/
+		
+		// ArrayList.remove()는 overloading 되어 있다.
+		// object를 넘기는 것보다는 index를 넘기는게 훨씬 효율적으로 보인다.
+		for (int i = 0; i < list.size(); i++) {
+			Human temp = list.get(i);
+			
+			if (temp.getSsn().equals(ssn)) {
+				list.remove(i);
+				return true;
+			}
+		}
+		
+		return false;
 		
 	}
 	
