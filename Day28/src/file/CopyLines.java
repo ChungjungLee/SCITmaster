@@ -9,7 +9,6 @@ import java.io.PrintWriter;
 public class CopyLines {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		BufferedReader inputStream = null;
 		PrintWriter outputStream = null;
 		
@@ -17,6 +16,10 @@ public class CopyLines {
 			inputStream = new BufferedReader(new FileReader("input.txt"));
 			outputStream = new PrintWriter(new FileWriter("output.txt"));
 			
+			/*
+			 * 버퍼에 입력 받은 값들을 우선 저장하고 있으니
+			 * line 별로 읽어들이는 것이 가능하다.
+			 */
 			String line;
 			while ((line = inputStream.readLine()) != null) {
 				outputStream.println(line);
