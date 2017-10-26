@@ -101,6 +101,7 @@ public class UI {
 				break;
 			}
 			
+			// TODO: 조건 비교가 잘못되어 있다.
 			if (option < 1 && 3 < option) {
 				System.out.println("잘못 입력하셨습니다");
 				continue;
@@ -139,8 +140,10 @@ public class UI {
 			boolean canInsert = manager.insert(t);
 			if (canInsert) {
 				System.out.println("등록에 성공했습니다");
+				System.out.println();
 			} else {
 				System.out.println("등록에 실패했습니다");
+				System.out.println();
 			}
 		}
 	}
@@ -224,6 +227,7 @@ public class UI {
 		
 		if (list.isEmpty()) {
 			System.out.println("장난감 정보가 한 건도 존재하지 않습니다");
+			System.out.println();
 			return;
 		}
 		

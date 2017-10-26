@@ -1,11 +1,14 @@
 package toy.manager;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import toy.vo.Bicycle;
-import toy.vo.Drone;
-import toy.vo.GameConsole;
 import toy.vo.Toy;
 
 /**
@@ -33,6 +36,45 @@ public class Manager {
 	 */
 	public void saveFile() {
 		// CODE HERE
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		
+		try {
+			fos = new FileOutputStream(FILE_NAME);
+			oos = new ObjectOutputStream(fos);
+			
+			oos.writeObject(toyList);
+			oos.flush();
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("SaveFile() error");
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			System.out.println("SaveFile() error");
+			e.printStackTrace();
+			
+		} finally {
+			if (oos != null) {
+				try {
+					oos.close();
+				} catch (IOException e) {
+					System.out.println("SaveFile() error in closing");
+					e.printStackTrace();
+				}
+			}
+			
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					System.out.println("SaveFile() error in closing");
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
 	}
 	
 	/**
@@ -40,6 +82,53 @@ public class Manager {
 	 */
 	public void loadFile() {
 		// CODE HERE
+		
+		// 파일이 없다면 읽어들일 수 없다.
+		if (!new File(FILE_NAME).exists()) {
+			return;
+		}
+		
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		
+		try {
+			fis = new FileInputStream(FILE_NAME);
+			ois = new ObjectInputStream(fis);
+			
+			Object o = ois.readObject();
+			toyList = (ArrayList<Toy>) o;
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("LoadFile() error");
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			System.out.println("LoadFile() error");
+			e.printStackTrace();
+			
+		} catch (ClassNotFoundException e) {
+			System.out.println("LoadFile() error");
+			e.printStackTrace();
+			
+		} finally {
+			if (ois != null) {
+				try {
+					ois.close();
+				} catch (IOException e) {
+					System.out.println("LoadFile() error in closing");
+					e.printStackTrace();
+				}
+			}
+			
+			if (fis != null) {
+				try {
+					fis.close();
+				} catch (IOException e) {
+					System.out.println("LoadFile() error in closing");
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	/**
@@ -49,7 +138,18 @@ public class Manager {
 	 */
 	public boolean insert(Toy toy) {
 		// CODE HERE
-		return true;
+		
+		Toy found = search(toy.getCode());
+		
+		if (found != null) {
+			return false;
+		}
+		
+		boolean isAdded = toyList.add(toy);
+		
+		saveFile();
+		
+		return isAdded;
 	}
 	
 	/**
@@ -59,6 +159,12 @@ public class Manager {
 	 */
 	public Toy search(String code) {
 		// CODE HERE
+		for (Toy element : toyList) {
+			if (element.getCode().equals(code)) {
+				return element;
+			}
+		}
+		
 		return null;
 	}
 
@@ -69,7 +175,17 @@ public class Manager {
 	 */
 	public boolean delete(String code) {
 		// CODE HERE
-		return false;
+		Toy found = search(code);
+		
+		if (found == null) {
+			return false;
+		}
+		
+		boolean isDeleted = toyList.remove(found);
+		
+		saveFile();
+		
+		return isDeleted;
 	}
 
 	/**
