@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 회원정보 처리 SQL -->
+<mapper namespace="dao.PersonMapper">
+
+	
+	<select id="selectPerson" resultType="vo.Person">
+		SELECT * FROM person
+	</select>
+	
+	<update id="updateForce">
+		UPDATE person
+		SET	num = 1,
+			name = '인간',
+			age = 100,
+			phone = '01011112222',
+			address = '서울특별시'
+	</update>
+	
+	<delete id="deletePersonAll">
+		DELETE FROM person 
+	</delete>
+	
+</mapper>
