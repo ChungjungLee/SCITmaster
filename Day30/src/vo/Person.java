@@ -66,7 +66,7 @@ public class Person {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "이름: " + name;
+		return "["+ num + "] 이름: " + name + ", 나이: " + age + ", 핸드폰: " + phone + ", 주소: " + address;
 	}
 	
 }

@@ -12,6 +12,25 @@ public class PersonDAO {
 	private SqlSessionFactory factory = 
 			MybatisConfig.getSqlSessionFactory();
 	
+	public void insert(Person person) {
+		// 1. 세션 열기
+		SqlSession session = factory.openSession();
+		
+		// 2. 매퍼 열기
+		PersonMapper mapper = 
+				session.getMapper(PersonMapper.class);
+		
+		// 3. 동작
+		mapper.insertPerson(person);
+		
+		// 3-2. 커밋
+		session.commit();
+		
+		// 4. 세션 닫기
+		session.close();
+	}
+	
+	
 	// 이름이 꼭 같을 필요는 없다.
 	public List<Person> selectPerson() {
 		// 1. 세션 열기
@@ -67,4 +86,75 @@ public class PersonDAO {
 		session.close();
 		
 	}
+	
+	public int deletePerson(int num) {
+		SqlSession session = null;
+		int result = 0;
+		
+		try {
+			session = factory.openSession();
+			PersonMapper mapper = session.getMapper(PersonMapper.class);
+			
+			result = mapper.deletePerson(num);
+			
+			session.commit();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return result;
+	}
+	
+	public int updatePerson(Person person) {
+		SqlSession session = null;
+		int result = 0;
+		
+		try {
+			session = factory.openSession();
+			PersonMapper mapper = session.getMapper(PersonMapper.class);
+			
+			result = mapper.updatePerson(person);
+			
+			session.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return result;
+	}
+	
+	public Person selectOnePerson(int num) {
+		SqlSession session = null;
+		Person result = null;
+		
+		try {
+			session = factory.openSession();
+			PersonMapper mapper = session.getMapper(PersonMapper.class);
+			
+			result = mapper.selectOne(num);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return result;
+	}
+	
 }

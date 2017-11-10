@@ -4,10 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 회원정보 처리 SQL -->
+<!-- namespace는 이 파일과 바인딩시킬 interface의 절대 주소 -->
 <mapper namespace="dao.PersonMapper">
 
+	<!-- 사람 정보 등록 -->
+	<insert id="insertPerson" parameterType="person">
+		INSERT INTO 
+			person (num, name, age, phone, address)
+		VALUES 
+			(#{num}, #{name}, #{age}, #{phone}, #{address})
+	</insert>
 	
-	<select id="selectPerson" resultType="vo.Person">
+	<!-- type에는 해당 클래스의 full path를 지정해야 한다 -->
+	<select id="selectPerson" resultType="person">
 		SELECT * FROM person
 	</select>
 	
@@ -21,7 +30,32 @@
 	</update>
 	
 	<delete id="deletePersonAll">
-		DELETE FROM person 
+		DELETE FROM person
 	</delete>
+	
+	<delete id="deletePerson" parameterType="int">
+		DELETE FROM person
+		WHERE num = #{value}
+	</delete>
+	
+	<!-- alias로 인해서 VO클래스의 full path를 명시할 필요가 없다 -->
+	<update id="updatePerson" parameterType="person">
+		UPDATE person
+		SET
+			name = #{name},
+			age = #{age},
+			phone = #{phone},
+			address = #{address}
+		WHERE
+			num = #{num}
+	</update>
+	
+	<!-- 한 명의 정보만 받아옴 -->
+	<select id="selectOne" 
+		parameterType="int" resultType="person">
+		SELECT *
+		FROM person
+		WHERE num = #{num}
+	</select>
 	
 </mapper>

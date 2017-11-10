@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/java_workspace/Day30/lib/mybatis-3.2.8.jar"/>
-	<classpathentry kind="lib" path="C:/java_workspace/Day30/lib/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="C:/java_git_workspace/SCITmaster/Day30/lib/mybatis-3.2.8.jar"/>
+	<classpathentry kind="lib" path="C:/java_git_workspace/SCITmaster/Day30/lib/ojdbc6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
