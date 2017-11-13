@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 회원정보 처리 SQL -->
+<!-- namespace는 이 파일과 바인딩시킬 interface의 절대 주소 -->
+<mapper namespace="board.dao.BoardMapper">
+
+	<!-- #{...}은 getter를 이용해 값을 가져오므로 VO에 getter 선언 필수 -->
+	<insert id="insertBoard" parameterType="board">
+		INSERT INTO board 
+			(boardnum, writer, title, text)
+		VALUES
+			(board_seq.nextVal, #{writer}, #{title}, #{text})
+	</insert>
+	
+	<select id="selectAllBoards" resultType="board">
+		SELECT 
+			boardnum, 
+			title,
+			writer,
+			hitnum, 
+			TO_CHAR(indate, 'yyyy/mm/dd') as indate
+		FROM 
+			board
+		ORDER BY
+			boardnum DESC
+	</select>
+	
+	<select id="selectOneBoard" resultType="board">
+		SELECT 
+			*
+		FROM 
+			board
+		WHERE
+			boardnum = #{boardNum}
+	</select>
+	
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM board
+		WHERE boardnum = #{boardNum}
+	</delete>
+	
+	<!-- Map으로부터 value를 얻고자 할 때는 #{key}를 이용한다 -->
+	<!-- column을 동적으로 비교하려면 ${...}을 이용한다 -->
+	<!-- 문자열은 자동으로 '' 처리되므로 LIKE의 경우는 아래와 같이 한다 -->
+	<select id="searchBoards" parameterType="hashmap" resultType="board">
+		SELECT
+			*
+		FROM
+			board
+		WHERE
+			${searchCategory} LIKE '%'||#{searchString}||'%'
+	</select>
+</mapper>
