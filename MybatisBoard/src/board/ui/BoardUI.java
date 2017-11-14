@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import board.dao.BoardDAO;
 import board.vo.Board;
+import board.vo.Reply;
 
 public class BoardUI {
 	private Scanner sc = new Scanner(System.in);
@@ -21,9 +22,10 @@ public class BoardUI {
 			System.out.println("=== 게 시 판 ===");
 			System.out.println("1. 글 쓰 기");
 			System.out.println("2. 전 체 글 목 록");
-			System.out.println("3. 글 하 나 읽 기");
+			System.out.println("3. 게 시 글 읽 기");
 			System.out.println("4. 글 삭 제");
 			System.out.println("5. 글 검 색");
+			System.out.println("6. 글 검 색 by teacher");
 			System.out.print("입력>> ");
 			
 			int option = 0;
@@ -45,7 +47,7 @@ public class BoardUI {
 					break;
 					
 				case 3:	// 글 하나 읽기
-					printOneBoard();
+					readBoard();
 					break;
 					
 				case 4:	// 글 삭제
@@ -54,6 +56,10 @@ public class BoardUI {
 					
 				case 5:	// 글 검색
 					searchBoard();
+					break;
+					
+				case 6:
+					searchBoardTeacher();
 					break;
 					
 				default:
@@ -124,24 +130,78 @@ public class BoardUI {
 	/**
 	 * 특정 게시글을 입력받아 출력한다.
 	 */
-	private void printOneBoard() {
-		System.out.println("--- 글 하 나 읽 기 ---");
-		
-		sc.nextLine();
+	private void readBoard() {
+		System.out.println("--- 게 시 글 읽 기 ---");
 		
 		System.out.print("게시글 번호: ");
-		int boardNum = sc.nextInt();
+		int boardNum = 0;
 		
-		Board result = boardDao.selectOneBoard(boardNum);
+		try {
+			boardNum = sc.nextInt();
+		} catch (Exception e) {
+			e.printStackTrace();
+			sc.nextLine();
+		}
 		
-		if (result == null) {
-			System.out.println("[알림] 해당 게시글은 존재하지 않습니다.");
-		} else {
-			printBoardFormat(result);
-			result.increaseHitNum();
+		Board boardToRead = boardDao.selectBoard(boardNum);
+		printBoardFormat(boardToRead);
+		System.out.println(boardToRead.getIndate());
+		boardToRead.increaseHitNum();
+		
+		boardDao.updateBoard(boardToRead);
+		
+		/*
+		while (true) {
+			Board boardToRead = boardDao.selectBoard(boardNum);
 			
-			// TODO: 조회수를 늘렸으면 다시 DB에 저장하는 것이 필요하다.
-			//updateBoard(result);
+			if (boardToRead == null) {
+				System.out.println("[알림] 해당 게시글은 존재하지 않습니다.");
+				break;
+			}
+		
+			printBoardFormat(boardToRead);
+			
+			// TODO: 리플을 읽어와서 출력
+			printAllReplies(boardNum);
+			
+			// TODO: 리플을 달 것인지 물어본다
+			System.out.print("1. 댓글 달기 0. 나가기");
+			int choice = 0;
+			
+			try {
+				choice = sc.nextInt();
+			} catch (Exception e) {
+				sc.nextLine();
+			}
+			
+			// TODO: 리플을 달지 않는다면 반복문 종료
+			if (choice == 0) {
+				break;
+			}
+			
+			// TODO: 리플을 달거라면 글 작성 후 다시 글을 읽음
+			
+			boardToRead.increaseHitNum();
+			boardDao.updateBoard(boardToRead);
+		}
+		*/
+	}
+	
+	private void printAllReplies(int boardNum) {
+		// TODO: Dao한테 boardNum 넘겨주고 리플 list를 받아온다
+		List<Reply> replies = boardDao.selectAllReplies(boardNum);
+		
+		// TODO: 댓글들 전부 출력
+		if (replies == null) {
+			return;
+		}
+		
+		if (replies.isEmpty()) {
+			System.out.println("댓글이 아직 없습니다.");
+		} else {
+			for (Reply reply : replies) {
+				System.out.println(reply);
+			}
 		}
 	}
 	
@@ -166,7 +226,14 @@ public class BoardUI {
 		sc.nextLine();
 		
 		System.out.print("게시글 번호: ");
-		int boardNum = sc.nextInt();
+		int boardNum = 0;
+		
+		try {
+			boardNum = sc.nextInt();
+		} catch (Exception e) {
+			e.printStackTrace();
+			sc.nextLine();
+		}
 		
 		int result = boardDao.deleteBoard(boardNum);
 		
@@ -232,4 +299,57 @@ public class BoardUI {
 		}
 		
 	}
+	
+	private void searchBoardTeacher() {
+		System.out.println("--- 글 검 색 ---");
+		System.out.println("1. 작성자 2. 제목 3. 내용");
+		System.out.print("입력>> ");
+		
+		int col = 0;
+		
+		try {
+			col = sc.nextInt();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			sc.nextLine();
+		}
+		
+		if (col < 1 || col > 3) {
+			System.out.println("잘못 입력하셨습니다.");
+			return;
+		}
+		
+		sc.nextLine();	// 위의 nextInt() 후 남아 있는 개행 문자 삭제
+		
+		System.out.print("단어 입력>> ");
+		String word = sc.nextLine();
+		
+		List<Board> result = boardDao.searchBoardTeacher(col, word);
+		
+		if (result == null || result.isEmpty()) {
+			System.out.println("[에러] 검색 결과가 없습니다.");
+		} else {
+			for (Board board : result) {
+				System.out.println(board);
+			}
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

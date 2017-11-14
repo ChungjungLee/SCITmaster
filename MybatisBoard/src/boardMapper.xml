@@ -28,18 +28,19 @@
 			boardnum DESC
 	</select>
 	
-	<select id="selectOneBoard" resultType="board">
+	<!-- #{value}도 괜찮다 -->
+	<select id="selectOneBoard" parameterType="int" resultType="board">
 		SELECT 
 			*
 		FROM 
 			board
 		WHERE
-			boardnum = #{boardNum}
+			boardnum = #{boardnum}
 	</select>
 	
 	<delete id="deleteBoard" parameterType="int">
 		DELETE FROM board
-		WHERE boardnum = #{boardNum}
+		WHERE boardnum = #{boardnum}
 	</delete>
 	
 	<!-- Map으로부터 value를 얻고자 할 때는 #{key}를 이용한다 -->
@@ -53,4 +54,73 @@
 		WHERE
 			${searchCategory} LIKE '%'||#{searchString}||'%'
 	</select>
+	
+	<update id="updateBoard" parameterType="board">
+		UPDATE
+			board
+		SET
+			hitnum = #{hitnum},
+			indate = TO_DATE(#{indate}, 'YYYY/MM/DD HH:MI:SS')
+		WHERE
+			boardnum = #{boardnum}
+	</update>
+	
+	<!-- 검색 MyBatis가 제공하는 동적 쿼리문을 사용한다. -->
+	<!-- col을 알아서 parameter로부터 읽어 온다 map.get("col")-->
+	<!-- 그 parameter의 type이 Map이라면 알아서 getKey()를 해 값을 받아온다 -->
+	<!-- <where></where>는 있으면 생성 없으면 생성하지 않는다 -->
+	<select id="searchBoardTeacher" parameterType="map" resultType="board">
+		SELECT
+			*
+		FROM
+			board
+		<where>
+			<if test="col == 1">
+				writer LIKE '%'||"word"||'%'
+			</if>
+			<if test="col == 2">
+				title LIKE '%'||#{word}||'%'
+			</if>
+			<if test="col == 3">
+				text LIKE '%'||#{word}||'%'
+			</if>
+		</where>
+	</select>
+	<!-- single quotation을 해줄 필요가 없는 이유: JDBC에서 알아서 붙여줌 -->
+	
+	<!-- 리플 가져오기 -->
+	<select id="selectAllReplies" parameterType="int" resultType="reply">
+		SELECT
+			*
+		FROM
+			reply
+		WHERE
+			boardnum = #{boardnum}
+		ORDER BY
+			replynum DESC
+	</select>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

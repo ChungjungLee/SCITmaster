@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import board.vo.Board;
+import board.vo.Reply;
 
 public class BoardDAO {
 	private SqlSessionFactory factory = 
@@ -73,7 +74,7 @@ public class BoardDAO {
 	 * @param boardNum 선택할 게시글의 번호
 	 * @return 선택된 게시글, 없다면 null
 	 */
-	public Board selectOneBoard(int boardNum) {
+	public Board selectBoard(int boardNum) {
 		SqlSession session = null;
 		Board result = null;
 		
@@ -148,4 +149,112 @@ public class BoardDAO {
 		
 		return result;
 	}
+	
+	/**
+	 * 게시글을 업데이트한다.
+	 * @param board 업데이트 할 게시글
+	 * @return 업데이트 완료된 row 수
+	 */
+	public int updateBoard(Board board) {
+		SqlSession session = null;
+		int result = 0;
+		
+		try {
+			session = factory.openSession();
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			
+			mapper.updateBoard(board);
+			
+			session.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return result;
+	}
+	
+	public List<Board> searchBoardTeacher(int col, String word) {
+		SqlSession session = null;
+		List<Board> result = null;
+		
+		try {
+			session = factory.openSession();
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			
+			
+			HashMap<String, Object> map = new HashMap<>();
+			
+			map.put("col", col);	// column 선택 숫자
+			map.put("word", word);	// 검색할 키워드
+			
+			result = mapper.searchBoardTeacher(map);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return result;
+	}
+
+	public List<Reply> selectAllReplies(int boardNum) {
+		SqlSession session = null;
+		List<Reply> result = null;
+		
+		try {
+			session = factory.openSession();
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			
+			result = mapper.selectAllReplies(boardNum);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return result;
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
