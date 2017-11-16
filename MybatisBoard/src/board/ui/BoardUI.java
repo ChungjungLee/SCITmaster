@@ -142,15 +142,7 @@ public class BoardUI {
 			e.printStackTrace();
 			sc.nextLine();
 		}
-		
-		Board boardToRead = boardDao.selectBoard(boardNum);
-		printBoardFormat(boardToRead);
-		System.out.println(boardToRead.getIndate());
-		boardToRead.increaseHitNum();
-		
-		boardDao.updateBoard(boardToRead);
-		
-		/*
+
 		while (true) {
 			Board boardToRead = boardDao.selectBoard(boardNum);
 			
@@ -180,13 +172,37 @@ public class BoardUI {
 			}
 			
 			// TODO: 리플을 달거라면 글 작성 후 다시 글을 읽음
+			writeReply(boardNum);
 			
-			boardToRead.increaseHitNum();
-			boardDao.updateBoard(boardToRead);
+			//boardToRead.increaseHitNum();
+			//boardDao.updateBoard(boardToRead);
 		}
-		*/
+		
 	}
 	
+	private void writeReply(int boardNum) {
+		sc.nextLine();	// 혹시 모를 개행문자 삭제
+		
+		System.out.print("작성자: ");
+		String writer = sc.nextLine();
+		
+		System.out.print("댓글 내용: ");
+		String retext = sc.nextLine();
+		
+		Reply reply = new Reply();
+		reply.setBoardnum(boardNum);
+		reply.setWriter(writer);
+		reply.setRetext(retext);
+		
+		int count = boardDao.insertReply(reply);
+		
+		if (count == 0) {
+			System.out.println("[알림] 댓글 등록 실패");
+		} else {
+			System.out.println("[알림] 댓글 등록 성공");
+		}
+	}
+
 	private void printAllReplies(int boardNum) {
 		// TODO: Dao한테 boardNum 넘겨주고 리플 list를 받아온다
 		List<Reply> replies = boardDao.selectAllReplies(boardNum);

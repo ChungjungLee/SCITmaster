@@ -84,6 +84,11 @@ public class BoardDAO {
 			
 			result = mapper.selectOneBoard(boardNum);
 			
+			if (result != null) {
+				mapper.updateHitnum(boardNum);
+				session.commit();
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
@@ -219,6 +224,29 @@ public class BoardDAO {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return result;
+	}
+
+	public int insertReply(Reply reply) {
+		SqlSession session = null;
+		int result = 0;
+		
+		try {
+			session = factory.openSession();
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			
+			result = mapper.insertReply(reply);
+			session.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
 		} finally {
 			if (session != null) {
 				session.close();

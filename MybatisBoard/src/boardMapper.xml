@@ -38,6 +38,16 @@
 			boardnum = #{boardnum}
 	</select>
 	
+	<!-- 조회수 늘리기 -->
+	<update id="updateHitnum" parameterType="int">
+		UPDATE
+			board
+		SET
+			hitnum = hitnum + 1
+		WHERE
+			boardnum = #{boardnum}
+	</update>
+	
 	<delete id="deleteBoard" parameterType="int">
 		DELETE FROM board
 		WHERE boardnum = #{boardnum}
@@ -99,6 +109,13 @@
 		ORDER BY
 			replynum DESC
 	</select>
+	
+	<insert id="insertReply" parameterType="reply">
+		INSERT INTO reply 
+			(replynum, boardnum, writer, retext)
+		VALUES 
+			(reply_seq.nextval, #{boardnum}, #{writer}, #{retext})
+	</insert>
 	
 </mapper>
 
